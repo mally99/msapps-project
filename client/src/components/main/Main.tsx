@@ -5,7 +5,7 @@ import { Button } from "../button/Button";
 import { strings } from "../../assets/strings";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import { arrangeImages } from "./helpers";
-import { TextField } from "../TextField/TextField";
+import { TextField } from "../textField/TextField";
 import { Text } from "../text/Text";
 
 export type IMain = {
