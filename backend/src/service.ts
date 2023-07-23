@@ -10,6 +10,16 @@ const fetchImages = async (category: string) => {
     try {
         const response = await fetch(`${baseUrl}${category}`)
         const parsedImages = await response.json() as PixabayImages;
+        //sort by id
+        parsedImages?.hits?.sort((a, b) => {
+            if (a.id > b.id) {
+                return 1;
+            } else if (a.id < b.id) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
         return parsedImages;
     }
     catch (error: any) {

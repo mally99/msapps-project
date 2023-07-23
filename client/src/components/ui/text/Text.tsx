@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 
-export type IText = {
+type TextType = {
     text?: string;
 }
-export const Text = ({ text }: IText) => (
+export const Text = ({ text }: TextType) => (
     <Typography align='center'>{text}</Typography>
 );

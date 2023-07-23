@@ -3,7 +3,7 @@ import { ChangeEvent } from 'react';
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 
-export type ITextField = {
+type TextFieldType = {
     label?: string
     value: string;
     onChange: (val: string) => void;
@@ -11,7 +11,7 @@ export type ITextField = {
     isSearch?: boolean;
 }
 
-export const TextField = ({ value, onChange, label, onClickIcon, isSearch }: ITextField) => (
+export const TextField = ({ value, onChange, label, onClickIcon, isSearch }: TextFieldType) => (
     <MuiTextField
         label={label}
         onChange={({
