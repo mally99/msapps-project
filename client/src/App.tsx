@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Image } from './components/image/Image';
 import { Main } from './components/main/Main';
 import { useAppDispatch, useAppSelector } from './hooks/useRedux';
-import { useFetch } from './hooks/useAsync';
+import { useFetch } from './hooks/useFetch';
 import { getImagesByCategoryAndPageIndex } from './api/Api';
 import { IImagesResponse } from './components/main/types';
 import { setImages } from './redux/AppSlice';
