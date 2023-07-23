@@ -2,16 +2,21 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import { imagesRouter } from "./images/router";
+import { router } from "./router";
 
 dotenv.config();
 
-// App Variables
+//app variables
+const PORT = parseInt(process.env.PORT as string, 10);
 const app = express();
 
-// App Configuration
-
+//app configuration
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use("/api/images/", imagesRouter);
+app.use("/api/", router);
+
+
+//server activation
+app.listen(PORT, () => { });
+
