@@ -1,13 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IImagesResponse } from "../components/main/types";
-import { mockImages } from "./mockup";
+import { ImagesResponse } from "../types";
 
-interface appState {
+interface AppState {
     loading: boolean;
-    images: IImagesResponse;
+    images?: ImagesResponse;
+    category: string;
+    pageIndex: number;
 }
 
-const initialState: appState = { loading: false, images: mockImages }
+const initialState: AppState = { loading: false, category: "", pageIndex: 0 }
 
 const slice = createSlice({
     name: "app",
@@ -16,11 +17,17 @@ const slice = createSlice({
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
-        setImages: (state, action: PayloadAction<IImagesResponse>) => {
+        setImages: (state, action: PayloadAction<ImagesResponse>) => {
             state.images = action.payload;
-        }
+        },
+        setPageIndex: (state, action: PayloadAction<number>) => {
+            state.pageIndex = action.payload;
+        },
+        setCategory: (state, action: PayloadAction<string>) => {
+            state.category = action.payload;
+        },
     }
 })
-export const { setLoading, setImages } = slice.actions;
+export const { setLoading, setImages, setPageIndex, setCategory } = slice.actions;
 
 export default slice.reducer

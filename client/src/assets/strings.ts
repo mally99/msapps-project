@@ -3,4 +3,4 @@ export const strings = {
     next: "next",
     category: "category",
     noItems: "No Items Found For Category : "
-}
+};
