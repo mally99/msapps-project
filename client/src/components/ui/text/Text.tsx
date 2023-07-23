@@ -4,6 +4,6 @@ import React from 'react';
 export type IText = {
     text?: string;
 }
-export const Text = ({ text }: IText) => {
-    return <Typography align='center'>{text}</Typography>
-}
+export const Text = ({ text }: IText) => (
+    <Typography align='center'>{text}</Typography>
+);

@@ -1,34 +1,43 @@
-import React, { useEffect, useState } from "react";
-import styles from "./Main.module.scss"
-import { ImageList } from "../imageList/ImageList";
-import { Button } from "../button/Button";
+import React, { useState } from "react";
 import { strings } from "../../assets/strings";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
-import { arrangeImages } from "./helpers";
-import { TextField } from "../textField/TextField";
-import { Text } from "../text/Text";
+import { Text } from "../ui/text/Text";
+import { Button } from "../ui/button/Button";
+import { TextField } from "../ui/textField/TextField";
+import { ImageList } from "../ui/imageList/ImageList";
+import { setCategory, setPageIndex } from "../../redux/AppSlice";
+import Stack from "@mui/material/Stack";
 
-export type IMain = {
-    setPageIndex?: Function;
-    setCategory?: Function;
-    category?: string;
-    pageIndex?: number
-}
-export const Main = ({ setPageIndex = () => { }, setCategory = () => { }, category }: IMain) => {
-    const { images } = useAppSelector(state => state.app);
+export const Main = () => {
+    const { images, category, loading } = useAppSelector(state => state.app);
+    const dispatch = useAppDispatch();
     const [tempCategory, setTempCategory] = useState("");
     const items = images?.items;
     const currentPageIndex = images?.pageIndex;
     const totalItems = images?.totalItems;
-    const data = items?.length ? arrangeImages(items) : undefined;
+    const disablePrev = currentPageIndex === undefined || currentPageIndex <= 0 || !category;
+    const disableNext = currentPageIndex === undefined || totalItems === undefined ||
+        Math.floor(totalItems / 9) <= currentPageIndex || !category;
 
-    return <div className={styles.container}>
-        <div className={styles.buttons}>
-            <Button onClick={() => setPageIndex(currentPageIndex - 1)} text={strings.prev} disabled={currentPageIndex <= 0 || !category} />
-            <TextField value={tempCategory} onChange={setTempCategory} label={strings.category} onClickIcon={() => { setCategory(tempCategory); setPageIndex(0) }} isSearch />
-            <Button text={strings.next} onClick={() => setPageIndex(currentPageIndex + 1)} disabled={parseInt(`${totalItems / 9}`) <= currentPageIndex || !category} />
-        </div>
-        {items?.length ? <ImageList images={data} className={styles.imageList} /> :
-            <Text text={`${strings.noItems}${category}`} />}
-    </div>
+    const onClickPrev = () => {
+        currentPageIndex !== undefined && dispatch(setPageIndex(currentPageIndex - 1))
+    }
+    const onClickNext = () => {
+        currentPageIndex !== undefined && dispatch(setPageIndex(currentPageIndex + 1))
+    }
+    const onSearch = () => {
+        dispatch(setCategory(tempCategory));
+        dispatch(setPageIndex(0));
+    }
+
+    return <Stack alignItems="center" p="30px">
+        <Stack direction="row" justifyContent="space-between" width="100%">
+            <Button onClick={onClickPrev} text={strings.prev} disabled={disablePrev} />
+            <TextField value={tempCategory} onChange={setTempCategory} label={strings.category}
+                onClickIcon={onSearch} isSearch />
+            <Button text={strings.next} onClick={onClickNext} disabled={disableNext} />
+        </Stack>
+        {items?.length ? <ImageList images={items} /> :
+            (!loading && <Text text={`${strings.noItems}${category}`} />)}
+    </Stack>
 }
