@@ -1,18 +1,18 @@
 import { useRef, useEffect } from "react";
 
-type IUseAsync = {
+type IUseFetch = {
     request?: () => Promise<any>;
     onSuccess?: Function;
     onFailure?: Function;
     dependencies?: any[];
 };
 
-export const useAsync = ({
+export const useFetch = ({
     request,
     onSuccess = () => { },
     onFailure = () => { },
     dependencies = []
-}: IUseAsync) => {
+}: IUseFetch) => {
     const asyncLock = useRef(false);
 
     useEffect(() => {

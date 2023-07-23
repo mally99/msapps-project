@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Image } from './components/image/Image';
 import { Main } from './components/main/Main';
 import { useAppDispatch, useAppSelector } from './hooks/useRedux';
-import { useAsync } from './hooks/useAsync';
+import { useFetch } from './hooks/useAsync';
 import { getImagesByCategoryAndPageIndex } from './api/Api';
 import { IImagesResponse } from './components/main/types';
 import { setImages } from './redux/AppSlice';
@@ -14,7 +14,7 @@ export const App = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [category, setCategory] = useState("");
 
-  useAsync({
+  useFetch({
     request: category ? () => getImagesByCategoryAndPageIndex(category, pageIndex) : undefined,
     onSuccess: (response: IImagesResponse) => dispatch(setImages(response)),
     dependencies: [pageIndex, category]
